@@ -60,3 +60,5 @@ void main(){
     root = insert(root,8);
     root = insert(root,4);
 }
+
+//changes are reflected check..
