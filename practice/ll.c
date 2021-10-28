@@ -44,7 +44,6 @@ void reverse(ll **h){
     cur = nxt;
   }
   *h = pre;
-  printf("\n");
 }
 
 void main(){
