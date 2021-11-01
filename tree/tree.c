@@ -50,15 +50,32 @@ int minrec(tree *rt){
     }
 }
 
-
-void main(){
-    tree *root;
-    root = NULL;
-    root = insert(root,10);
-    root = insert(root,5);
-    root = insert(root,2);
-    root = insert(root,8);
-    root = insert(root,4);
+void inorder(tree *t){
+    if(t){
+        inorder(t->l);
+        printf("%d ",t->data);
+        inorder(t->r);
+    }
 }
 
-//changes are reflected check..
+int identical(tree *t1,tree *t2){
+    if(t1==NULL && t2==NULL){
+        return 1;
+    }
+    else{
+        return (t1->data==t2->data)&&(identical(t1->l,t2->l))&&(identical(t1->r,t2->r));
+    }
+    return 0;
+}
+
+void main(){
+    tree *t1,*t2;
+    t1 = t2 = NULL;
+    t1 = insert(t1,0);
+    t1 = insert(t1,1);
+    t1 = insert(t1,2);
+    t2 = insert(t2,0);
+    t2 = insert(t2,1);
+    t2 = insert(t2,2);
+    printf("%d",identical(t1,t2));
+}
