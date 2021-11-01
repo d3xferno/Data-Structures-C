@@ -62,20 +62,31 @@ int identical(tree *t1,tree *t2){
     if(t1==NULL && t2==NULL){
         return 1;
     }
-    else{
+    if(t1 && t2){
         return (t1->data==t2->data)&&(identical(t1->l,t2->l))&&(identical(t1->r,t2->r));
     }
     return 0;
 }
 
+int cnt(tree *t){
+    if(t==NULL)return 0;
+    return 1+cnt(t->l)+cnt(t->r);
+}
+
+int isComplete(tree *t,int i,int c){
+    if(t==NULL)return 0;
+    if(i>=c)return 0;
+    return isComplete(t->l,2*i+1,c)&&isComplete(t->r,2*i+2,c);
+}
+
 void main(){
     tree *t1,*t2;
     t1 = t2 = NULL;
-    t1 = insert(t1,0);
+    t1 = insert(t1,10);
+    t1 = insert(t1,5);
     t1 = insert(t1,1);
-    t1 = insert(t1,2);
-    t2 = insert(t2,0);
-    t2 = insert(t2,1);
-    t2 = insert(t2,2);
-    printf("%d",identical(t1,t2));
+    t1 = insert(t1,50);
+    t1 = insert(t1,40);
+    t1 = insert(t1,100);
+    printf("%d",isComplete(t1,0,cnt(t1)));
 }
