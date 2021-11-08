@@ -42,10 +42,9 @@ int max(tree *rt){
     return ptr->data;
 }
 
-int minrec(tree *rt){
-    if(rt==NULL)return -1;
-    else{
-        if(rt->l==NULL)return rt->data;
+tree *minrec(tree *rt){
+    if(rt){
+        if(rt->l==NULL)return rt;
         else return minrec(rt->l);
     }
 }
@@ -74,10 +73,39 @@ int cnt(tree *t){
 }
 
 int isComplete(tree *t,int i,int c){
-    if(t==NULL)return 0;
+    if(t==NULL)return 1;
     if(i>=c)return 0;
     return isComplete(t->l,2*i+1,c)&&isComplete(t->r,2*i+2,c);
 }
+
+tree *del(tree *t,int x){
+    if(t==NULL)return NULL;
+    if(x<t->data){
+        t->l = del(t->l,x);
+    }
+    else if(x>t->data){
+        t->r = del(t->r,x);
+    }
+    else{
+        if(t->l==NULL){
+            tree *tmp = t->l;
+            free(tmp);
+            return tmp;
+        }
+        if(t->r==NULL){
+            tree *tmp = t->r;
+            free(tmp);
+            return tmp;
+        }
+        if(t->r && t->l){
+            tree *tmp = minrec(t->r);
+            t->data = tmp->data;
+            t->r = del(t->r,tmp->data);
+        }
+    }
+    return t;
+}
+
 
 void main(){
     tree *t1,*t2;
@@ -88,5 +116,6 @@ void main(){
     t1 = insert(t1,50);
     t1 = insert(t1,40);
     t1 = insert(t1,100);
-    printf("%d",isComplete(t1,0,cnt(t1)));
+    t1 = del(t1,10);
+    inorder(t1);
 }
