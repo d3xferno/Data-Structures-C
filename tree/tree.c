@@ -34,6 +34,7 @@ int min(tree *rt){
 }
 
 int max(tree *rt){
+    if(rt==NULL)return -1;
     tree *ptr = rt;
     while(ptr->r!=NULL){
         ptr = ptr->r;
@@ -41,7 +42,7 @@ int max(tree *rt){
     return ptr->data;
 }
 
-tree* minrec(tree *rt){
+tree *minrec(tree *rt){
     if(rt){
         if(rt->l==NULL)return rt;
         else return minrec(rt->l);
@@ -72,37 +73,53 @@ int cnt(tree *t){
 }
 
 int isComplete(tree *t,int i,int c){
-    if(t==NULL)return 0;
+    if(t==NULL)return 1;
     if(i>=c)return 0;
     return isComplete(t->l,2*i+1,c)&&isComplete(t->r,2*i+2,c);
 }
 
 tree *del(tree *t,int x){
-    if(t==NULL)return t;
-    if(t->data>x){
+    if(t==NULL)return NULL;
+    if(x<t->data){
         t->l = del(t->l,x);
     }
-    if(t->data<x){
+    else if(x>t->data){
         t->r = del(t->r,x);
     }
-    if(t->data==x){
+    else{
         if(t->l==NULL){
-            tree *tmp = t->r;
-            free(t);
-            return tmp;
-        }
-        else if(t->r==NULL){
             tree *tmp = t->l;
-            free(t);
+            free(tmp);
             return tmp;
         }
-        else{
+        if(t->r==NULL){
+            tree *tmp = t->r;
+            free(tmp);
+            return tmp;
+        }
+        if(t->r && t->l){
             tree *tmp = minrec(t->r);
             t->data = tmp->data;
             t->r = del(t->r,tmp->data);
         }
     }
     return t;
+}
+
+
+void curlvl(tree *t,int lvl){
+    if(!t)return;
+    if(lvl==1)printf("%d ",t->data);
+    else{
+        curlvl(t->l,lvl-1);
+        curlvl(t->r,lvl-1);
+    }
+}
+
+void lvlorder(tree *t,int h){
+    for(int i=1;i<=h;i++){
+        curlvl(t,i);
+    }
 }
 
 int height(tree *t){
@@ -129,21 +146,15 @@ int range(tree *t,int lo,int hi){
 
 void main(){
     tree *t1,*t2;
-    t1 = NULL;
-    t1 = insert(t1,10);
-    t1 = insert(t1,5);
-    t1 = insert(t1,50);
+    t1 = t2 = NULL;
+    t1 = insert(t1,3);
     t1 = insert(t1,1);
-    t1 = insert(t1,40);
-    t1 = insert(t1,100);
-
-    t2 = NULL;
-    t2 = insert(t2,10);
-    t2 = insert(t2,5);
-    t2 = insert(t2,50);
-    t2 = insert(t2,1);
-    t2 = insert(t2,40);
-    t2 = insert(t2,100);
-    printf("%d %d",height(t1),height(t2));
-    printf("\n%d %d",range(t1,5,45),range(t2,1,45));
+    t1 = insert(t1,5);
+    t1 = insert(t1,0);
+    t1 = insert(t1,2);
+    t1 = insert(t1,4);
+    t1 = insert(t1,6);
+    inorder(t1);
+    printf("\n");
+    lvlorder(t1,height(t1));
 }
