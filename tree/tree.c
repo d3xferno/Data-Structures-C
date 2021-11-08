@@ -107,15 +107,54 @@ tree *del(tree *t,int x){
 }
 
 
+void curlvl(tree *t,int lvl){
+    if(!t)return;
+    if(lvl==1)printf("%d ",t->data);
+    else{
+        curlvl(t->l,lvl-1);
+        curlvl(t->r,lvl-1);
+    }
+}
+
+void lvlorder(tree *t,int h){
+    for(int i=1;i<=h;i++){
+        curlvl(t,i);
+    }
+}
+
+int height(tree *t){
+    if(t==NULL)return 0;
+
+    int lh = height(t->l);
+    int rh = height(t->r);
+
+    return lh>rh?lh+1:rh+1;
+}
+
+int range(tree *t,int lo,int hi){
+    if(t==NULL)return 0;
+    if(t->data<=hi && t->data>=lo){
+        return 1+range(t->l,lo,hi)+range(t->r,lo,hi);
+    }
+    if(t->data<lo){
+        return range(t->r,lo,hi);
+    }
+    if(t->data>hi){
+        return range(t->l,lo,hi);
+    }
+}
+
 void main(){
     tree *t1,*t2;
     t1 = t2 = NULL;
-    t1 = insert(t1,10);
-    t1 = insert(t1,5);
+    t1 = insert(t1,3);
     t1 = insert(t1,1);
-    t1 = insert(t1,50);
-    t1 = insert(t1,40);
-    t1 = insert(t1,100);
-    t1 = del(t1,10);
+    t1 = insert(t1,5);
+    t1 = insert(t1,0);
+    t1 = insert(t1,2);
+    t1 = insert(t1,4);
+    t1 = insert(t1,6);
     inorder(t1);
+    printf("\n");
+    lvlorder(t1,height(t1));
 }
