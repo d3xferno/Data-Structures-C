@@ -109,8 +109,8 @@ int height(avl *t){
 
 void search(avl *t,char x[]){
     if(t!=NULL){
-        if(strcmp(t->w,x)>0)search(t->r,x);
-        else if(strcmp(t->w,x)<0)search(t->l,x);
+        if(strcmp(t->w,x)>0)search(t->l,x);
+        else if(strcmp(t->w,x)<0)search(t->r,x);
         else if(strcmp(t->w,x)==0)printf("Meaning:%s",t->m);
     }
 }
