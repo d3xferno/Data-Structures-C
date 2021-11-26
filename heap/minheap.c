@@ -29,7 +29,8 @@ void delete(heap *h){
     int last = h->data[h->cur];
     h->cur--;
     h->data[1] = last;
-    int l=2,r=3;
+    int child = 2;
+    
     printf("\n%d",ans);
 }
 
