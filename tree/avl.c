@@ -4,7 +4,8 @@
 #include<ctype.h>
 
 typedef struct avl{
-    int data,h;
+    int h;
+    char w[100],m[100];
     struct avl *l,*r;
 }avl;
 
@@ -14,7 +15,7 @@ int ht(avl *t){
 }
 
 int max(int x,int y){
-    return (x>y)?x:y;
+    return x>y?x:y;
 }
 
 avl *rRotate(avl *t){
@@ -35,34 +36,37 @@ avl *lRotate(avl *t){
     return t;
 }
 
-avl *insert(avl *t,int x){
+avl *insert(avl *t,char x[],char y[]){
     if(t==NULL){
-        avl *nw = (avl*)malloc(sizeof(avl));
-        nw->data = x;
+        avl *nw;
+        nw = NULL;
+        nw = (avl*)malloc(sizeof(avl));
+        strcpy(nw->w,x);
+        strcpy(nw->m,y);
         nw->l = nw->r = NULL;
         nw->h = 1;
         return nw;
     }
-    if(x<t->data){
-        t->l = insert(t->l,x);
+    if(strcmp(t->w,x)>0){
+        t->l = insert(t->l,x,y);
     }
-    else if(x>t->data){
-        t->r = insert(t->r,x);
+    else if(strcmp(t->w,x)<0){
+        t->r = insert(t->r,x,y);
     }
     else return t;
 
     int bal = ht(t->l)-ht(t->r);
-    if(bal>1 && x < t->l->data){//ll
+    if(bal>1 && (strcmp(t->l->w,x)>0)){//ll
         return rRotate(t);
     }
-    if(bal<-1 && x > t->r->data){//rr
+    if(bal<-1 && (strcmp(t->r->w,x)<0)){//rr
         return lRotate(t);
     }
-    if(bal>1 && x>t->l->data){//lr
+    if(bal>1 && (strcmp(t->l->w,x)<0)){//lr
         t->l = lRotate(t->l);
         return rRotate(t);
     }
-    if(bal<-1 && x<t->r->data){//rl
+    if(bal<-1 && (strcmp(t->r->w,x)>0)){//rl
         t->r = rRotate(t->r);
         return lRotate(t);
     }
@@ -72,14 +76,14 @@ avl *insert(avl *t,int x){
 void inorder(avl *t){
     if(t){
         inorder(t->l);
-        printf("%d ",t->data);
+        printf("%s-%s\n",t->w,t->m);
         inorder(t->r);
     }
 }
 
 void curlvl(avl *t,int lvl){
     if(!t)return;
-    if(lvl==1)printf("%d ",t->data);
+    if(lvl==1)printf(" %s:%s",t->w,t->m);
     else{
         printf("\n");
         curlvl(t->l,lvl-1);
@@ -93,24 +97,6 @@ void lvlorder(avl *t,int h){
     }
 }
 
-
-int cmp(char x[],char y[]){//ex:badger badge
-    int xl = strlen(x),yl = strlen(y);
-    int l=0,r=0,f=0;
-    while(x[l]!='\0' && y[r]!='\0'){
-        if(x[l]>y[r]){
-            f=1;
-            break;
-        }
-        l++;
-        r++;
-    }
-    if(f==0 && xl>yl)return 1;
-    if(f==0 && xl<=yl)return 0;
-    if(f==1)return 1;
-}
-
-
 int height(avl *t){
     if(t==NULL)return 0;
 
@@ -120,13 +106,26 @@ int height(avl *t){
     return lh>rh?lh+1:rh+1;
 }
 
+
+void search(avl *t,char x[]){
+    if(t!=NULL){
+        if(strcmp(t->w,x)>0)search(t->l,x);
+        else if(strcmp(t->w,x)<0)search(t->r,x);
+        else if(strcmp(t->w,x)==0)printf("Meaning:%s",t->m);
+    }
+}
+
 int main(){
     avl *t = NULL;
-    t = insert(t,10);
-    t = insert(t,15);
-    t = insert(t,5);
+    t = insert(t,"bisk","soup");
+    t = insert(t,"cite","refer");
+    t = insert(t,"boom","sound");
+    t = insert(t,"able","oppurtunity");
+    t = insert(t,"aged","old");
+    t = insert(t,"crew","group of people");
     inorder(t);
     printf("\n");
-    lvlorder(t,height(t));
+    search(t,"cite");
+    //lvlorder(t,height(t));
     return 0;
 }
