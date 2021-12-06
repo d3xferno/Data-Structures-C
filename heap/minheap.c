@@ -8,7 +8,7 @@ typedef struct heap{
 }heap;
 
 void init(heap *h,int size){
-    h->sal[0]=-1;
+    h->sal[0]=-1;//some big val
     h->emp[0] = '#';
     h->cur = 0;
     h->sz = size;
@@ -18,7 +18,7 @@ void insert(heap *h,char y,int x){
     h->sal[++(h->cur)] = x;
     h->emp[h->cur] = y;
     int i=h->cur;
-    while(i>0 && h->sal[i/2]>h->sal[i]){
+    while(i>0 && h->sal[i/2]>h->sal[i]){//<
         int tmp;
         tmp = h->sal[i/2];
         h->sal[i/2] = h->sal[i];
@@ -41,10 +41,10 @@ void delete(heap *h){
     int ch,p;
     for(p=1;2*p<=h->cur;p=ch){
         ch = 2*p;
-        if(ch!=h->cur && h->sal[ch]>h->sal[ch+1]){
+        if(ch!=h->cur && h->sal[ch]>h->sal[ch+1]){//<
             ch++;
         }
-        if(last>h->sal[ch]){
+        if(last>h->sal[ch]){//<
             h->sal[p] = h->sal[ch];
             h->emp[p] = h->emp[ch];
         }else break;

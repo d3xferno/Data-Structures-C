@@ -24,7 +24,7 @@ avl *rRotate(avl *t){
     t->l = lsub;
     t->h = 1+max(ht(t->l),ht(t->r));
     lft->h = 1+max(ht(lft->l),ht(lft->r));
-    return t;
+    return lft;
 }
 
 avl *lRotate(avl *t){
@@ -33,7 +33,7 @@ avl *lRotate(avl *t){
     t->r = rsub;
     t->h = 1+max(ht(t->l),ht(t->r));
     rgt->h = 1+max(ht(rgt->l),ht(rgt->r));
-    return t;
+    return rgt;
 }
 
 avl *insert(avl *t,char x[],char y[]){
@@ -55,18 +55,20 @@ avl *insert(avl *t,char x[],char y[]){
     }
     else return t;
 
+    t->h = 1+max(ht(t->l),ht(t->r));
+
     int bal = ht(t->l)-ht(t->r);
     if(bal>1 && (strcmp(t->l->w,x)>0)){//ll
         return rRotate(t);
     }
-    if(bal<-1 && (strcmp(t->r->w,x)<0)){//rr
+    if(bal< -1 && (strcmp(t->r->w,x)<0)){//rr
         return lRotate(t);
     }
     if(bal>1 && (strcmp(t->l->w,x)<0)){//lr
         t->l = lRotate(t->l);
         return rRotate(t);
     }
-    if(bal<-1 && (strcmp(t->r->w,x)>0)){//rl
+    if(bal< -1 && (strcmp(t->r->w,x)>0)){//rl
         t->r = rRotate(t->r);
         return lRotate(t);
     }

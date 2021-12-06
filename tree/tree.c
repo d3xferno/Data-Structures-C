@@ -88,12 +88,12 @@ tree *del(tree *t,int x){
     }
     else{
         if(t->l==NULL){
-            tree *tmp = t->l;
+            tree *tmp = t->r;
             free(tmp);
             return tmp;
         }
         if(t->r==NULL){
-            tree *tmp = t->r;
+            tree *tmp = t->l;
             free(tmp);
             return tmp;
         }
