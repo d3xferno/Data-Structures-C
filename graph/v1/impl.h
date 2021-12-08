@@ -7,6 +7,9 @@
 void create(city *c){
     printf("Enter the no of vertices:");
     scanf("%d",&c->vtx);
+    for(int i=0;i<c->vtx;i++){
+        for(int j=0;j<c->vtx;j++)c->adj[i][j]=0;
+    }
     int ch=1;
     do{
         char edge[2];
