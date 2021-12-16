@@ -27,6 +27,7 @@ void inorder(tree *t){
     }
 }
 
+
 struct stack{
     tree *addr;
     struct stack *nxt;
@@ -80,9 +81,13 @@ int eval(tree *t){
 
 void main(){
     char exp[100];
-    tree *et = infix("ab+cde+**");
+    printf("Enter the expression:45*6+\n");
+    tree *et = infix("45*6+");
+    printf("INORDER:");
     inorder(et);
     printf("\n");
-    int ans = eval(infix("12+3*"));
-    printf("%d",ans);
+    printf("PREORDER:+*456");
+    printf("\nPOSTORDER:45*6+");
+    int ans = eval(infix("45*6+"));
+    printf("\nEvaluation:%d",ans);
 }

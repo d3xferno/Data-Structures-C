@@ -6,7 +6,7 @@ int main(){
     city *c = (city *)malloc(sizeof(city));
     create(c);
     dis(c);
-    BFS(c,'A');
-    DFS(c,'A');
+    BFS(c,'D');
+    DFS(c,'D');
     return 0;
 }

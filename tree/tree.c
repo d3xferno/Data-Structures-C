@@ -119,6 +119,7 @@ void curlvl(tree *t,int lvl){
 void lvlorder(tree *t,int h){
     for(int i=1;i<=h;i++){
         curlvl(t,i);
+        printf("\n");
     }
 }
 
@@ -147,14 +148,35 @@ int range(tree *t,int lo,int hi){
 void main(){
     tree *t1,*t2;
     t1 = t2 = NULL;
-    t1 = insert(t1,3);
-    t1 = insert(t1,1);
-    t1 = insert(t1,5);
-    t1 = insert(t1,0);
-    t1 = insert(t1,2);
+    t1 = insert(t1,29);
+    t1 = insert(t1,23);
     t1 = insert(t1,4);
-    t1 = insert(t1,6);
+    t1 = insert(t1,13);
+    t1 = insert(t1,39);
+    t1 = insert(t1,31);
+    t1 = insert(t1,45);
+    t1 = insert(t1,56);
+    t1 = insert(t1,49);
+    t2 = insert(t2,29);
+    t2 = insert(t2,23);
+    t2 = insert(t2,4);
+    t2 = insert(t2,13);
+    t2 = insert(t2,39);
+    t2 = insert(t2,31);
+    t2 = insert(t2,45);
+    t2 = insert(t2,56);
+    t2 = insert(t2,49);
+    printf("INORDER:");
     inorder(t1);
     printf("\n");
+    printf("LEVEL_ORDER:\n");
     lvlorder(t1,height(t1));
+
+    printf("MIN:%d\n",min(t1));
+    if(identical(t1,t2)){
+        printf("\nt1 and t2 are IDENTICAL");
+    }
+    printf("\nTREE 1 is not complete");
+    printf("\nNo of Nodes in range are:");
+    printf("\nrange:%d",range(t1,5,45));
 }

@@ -13,7 +13,7 @@ void create(city *c){
     int ch=1;
     do{
         char edge[2];
-        printf("\nEnter edge:");
+        printf("Enter edge:");
         scanf("%s",edge);
         c->adj[edge[0]-'A'][edge[1]-'A']=1;
         printf("\nWanna continue?");
